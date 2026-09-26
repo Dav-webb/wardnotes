@@ -132,10 +132,10 @@ function AuthScreen({ onLoggedIn }) {
   return (
     <div className="auth-wrap">
       <div className="auth-card">
-        <div className="auth-logo">W</div>
+        <div className="auth-logo">R</div>
         <h1 className="auth-title">{mode === "login" ? "Welcome back" : "Create your account"}</h1>
         <p className="auth-subtitle">
-          {mode === "login" ? "Log in to WardNotes" : "Register to start writing shift reports"}
+          {mode === "login" ? "Log in to Report Book" : "Register to start writing shift reports"}
         </p>
 
         {error && <div className="auth-error">{error}</div>}
@@ -604,9 +604,9 @@ function TopBar({ user, shift, locked, onLogout, onHistory, onShiftChange, hideS
   return (
     <header className="topbar">
       <div className="brand">
-        <div className="logo">W</div>
+        <div className="logo">R</div>
         <div>
-          <div className="brand-name">WardNotes</div>
+          <div className="brand-name">Report Book</div>
           <div className="brand-sub">
             {shift} Report, {new Date().toLocaleDateString()} · {user.name} ({user.role})
           </div>
