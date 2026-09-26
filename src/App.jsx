@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 
 const emptyForm = { name: "", age: "", sex: "Female", time: "", diagnosis: "", passage: "" };
-const wardItems = ["Electricity", "Plumbing", "Water supply", "Equipments", "Accidents", "Incidents"];
-const emptyWard = Object.fromEntries(wardItems.map((item) => [item, "Good"]));
+const wardStatusItems = ["Electricity", "Plumbing", "Water supply", "Equipments"];
+const wardCountItems = ["Accidents", "Incidents"];
+const emptyWard = {
+  ...Object.fromEntries(wardStatusItems.map((item) => [item, "Good"])),
+  ...Object.fromEntries(wardCountItems.map((item) => [item, "0"])),
+};
 
 const API = "https://wardnotes-api.onrender.com";
 
@@ -278,10 +282,10 @@ function ReportViewer({ reportId, authHeader, onBack, onAddAddendum }) {
       <div className="card">
         <h2>Ward Status</h2>
         <div className="ward-grid">
-          {wardItems.map((item) => (
+          {[...wardStatusItems, ...wardCountItems].map((item) => (
             <div key={item}>
               <label className="field-label">{item}</label>
-              <b>{(report.ward_status || {})[item] || "—"}</b>
+              <b>{(report.ward_status || {})[item] ?? "—"}</b>
             </div>
           ))}
         </div>
@@ -548,7 +552,7 @@ function ReportScreen({ user, onLogout }) {
         <div className="card">
           <h2>Ward Status</h2>
           <div className="ward-grid">
-            {wardItems.map((item) => (
+            {wardStatusItems.map((item) => (
               <div key={item}>
                 <label className="field-label">{item}</label>
                 {locked ? (
@@ -558,8 +562,25 @@ function ReportScreen({ user, onLogout }) {
                     <option>Good</option>
                     <option>Fair</option>
                     <option>Poor</option>
-                    <option>Nil</option>
                   </select>
+                )}
+              </div>
+            ))}
+            {wardCountItems.map((item) => (
+              <div key={item}>
+                <label className="field-label">{item}</label>
+                {locked ? (
+                  <b>{ward[item] === "0" ? "Nil" : ward[item]}</b>
+                ) : (
+                  <input
+                    type="number"
+                    min="0"
+                    inputMode="numeric"
+                    value={ward[item]}
+                    onChange={(e) =>
+                      setWard({ ...ward, [item]: e.target.value.replace(/[^0-9]/g, "") || "0" })
+                    }
+                  />
                 )}
               </div>
             ))}
