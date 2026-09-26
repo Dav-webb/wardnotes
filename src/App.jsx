@@ -4,7 +4,7 @@ const emptyForm = { name: "", age: "", sex: "Female", time: "", diagnosis: "", p
 const wardItems = ["Electricity", "Plumbing", "Water supply", "Equipments", "Accidents", "Incidents"];
 const emptyWard = Object.fromEntries(wardItems.map((item) => [item, "Good"]));
 
-const API = "http://localhost:4000";
+const API = "https://wardnotes-api.onrender.com";
 
 // ---------- Entry card (with addendum support) ----------
 function EntryCard({ entry, canAddAddendum, onAddAddendum }) {
